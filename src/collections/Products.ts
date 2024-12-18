@@ -8,6 +8,9 @@ export const Products: CollectionConfig = {
   access: {
     create: () => false,
   },
+  admin: {
+    listSearchableFields: ["name"],
+  },
   fields: [
     {
       name: "id",
