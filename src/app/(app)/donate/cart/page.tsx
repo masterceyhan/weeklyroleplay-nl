@@ -30,7 +30,7 @@ type Player = {
 }
 
 export default function Page() {
-  const { basket, isLoading, isTebexLoading, removePackage } = useBasket()
+  const { basket, isLoading, isTebexLoading, removePackage, setBasket } = useBasket()
   const [players, setPlayers] = useState<Player[]>([])
   const [value, setValue] = useState<string>()
   const [open, setOpen] = useState(false)
@@ -60,6 +60,7 @@ export default function Page() {
   function registerEvents() {
     window.Tebex.checkout.on("payment:complete", (e) => {
       localStorage.removeItem("basketIdent")
+      setBasket(undefined)
 
       const transactionId = e.payment.txnId
       router.push(`/donate/complete?transactionId=${transactionId}`)
