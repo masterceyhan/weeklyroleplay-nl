@@ -8,7 +8,7 @@ export const maxDuration = 20
 export async function GET() {
   const packages = await tebexHeadlessClient.getPackages()
   const payload = await getPayload({ config: configPromise })
-  const existingProducts = (await payload.find({ collection: "products" })).docs
+  const existingProducts = (await payload.find({ collection: "products", pagination: false })).docs
 
   for (const pkg of packages) {
     if (existingProducts.some((product) => product.id === pkg.id)) {

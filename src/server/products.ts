@@ -9,6 +9,7 @@ async function getPayloadProducts() {
 
   const products = await payload.find({
     collection: "products",
+    pagination: false,
   })
 
   return products.docs
