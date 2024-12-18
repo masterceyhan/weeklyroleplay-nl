@@ -2,6 +2,7 @@
 import { postgresAdapter } from "@payloadcms/db-postgres"
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud"
 import { lexicalEditor } from "@payloadcms/richtext-lexical"
+import { s3Storage } from "@payloadcms/storage-s3"
 import path from "path"
 import { buildConfig } from "payload"
 import { fileURLToPath } from "url"
@@ -36,6 +37,21 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: "weeklyroleplay",
+      config: {
+        region: "auto",
+        endpoint:
+          "https://cd19cfe093bf44dc33f185ea89124d46.r2.cloudflarestorage.com/weeklyroleplay",
+        credentials: {
+          accessKeyId: "b292e3204efcaccd2d8e90dcc0f77e51",
+          secretAccessKey: "8d15aecf3671038a8d9fe98ea102d2e3c926d869ba90d4a54ad1d78135f37afb",
+        },
+      },
+    }),
     // storage-adapter-placeholder
   ],
 })
