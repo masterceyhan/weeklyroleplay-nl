@@ -50,7 +50,7 @@ export function ProductImages(props: {
                 setSelectedIndex(i)
               }}
             >
-              <Image
+              <NextImage
                 src={image.url ?? "/logo.png"}
                 width={128}
                 height={128}
