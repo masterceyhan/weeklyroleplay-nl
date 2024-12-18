@@ -3,6 +3,8 @@ import { NextResponse } from "next/server"
 import { getPayload } from "payload"
 import configPromise from "@payload-config"
 
+export const maxDuration = 20
+
 export async function GET() {
   const packages = await tebexHeadlessClient.getPackages()
   const payload = await getPayload({ config: configPromise })
@@ -13,6 +15,7 @@ export async function GET() {
       continue
     }
 
+    console.log("Adding product", pkg.id)
     await payload.create({
       collection: "products",
       data: {
