@@ -20,41 +20,43 @@ export default async function Page(props: { params: Promise<{ categorySlug: stri
       />
 
       <div className="pt-10 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
-        {category.packages.map((pkg) => {
-          const product = products.find((p) => p.id == pkg.id)
+        {category.packages
+          .sort((a, b) => b.total_price - a.total_price)
+          .map((pkg) => {
+            const product = products.find((p) => p.id == pkg.id)
 
-          return (
-            <Link
-              href={`/product/${categorySlug}/${pkg.id}`}
-              key={pkg.id}
-              className="flex flex-col bg-muted/10 p-4 rounded-lg border border-foreground/5 gap-2 group hover:bg-foreground/5 transition-colors"
-            >
-              <Image
-                className="self-center group-hover:-translate-y-3 transition-transform"
-                src={pkg.image ?? "/logo.png"}
-                width={256}
-                height={256}
-                alt={pkg.name.replaceAll("_", "")}
-              />
+            return (
+              <Link
+                href={`/product/${categorySlug}/${pkg.id}`}
+                key={pkg.id}
+                className="flex flex-col bg-muted/10 p-4 rounded-lg border border-foreground/5 gap-2 group hover:bg-foreground/5 transition-colors"
+              >
+                <Image
+                  className="self-center group-hover:-translate-y-3 transition-transform"
+                  src={pkg.image ?? "/logo.png"}
+                  width={256}
+                  height={256}
+                  alt={pkg.name.replaceAll("_", "")}
+                />
 
-              <h2 className="text-lg font-semibold">{pkg.name.replaceAll("_", " ")}</h2>
-              <div
-                className="text-foreground/80 text-sm line-clamp-2"
-                dangerouslySetInnerHTML={{ __html: category.description }}
-              />
+                <h2 className="text-lg font-semibold">{pkg.name.replaceAll("_", " ")}</h2>
+                <div
+                  className="text-foreground/80 text-sm line-clamp-2"
+                  dangerouslySetInnerHTML={{ __html: pkg.description }}
+                />
 
-              <div className="space-x-2">
-                {product && product.oldPrice !== pkg.total_price && (
-                  <span className="font-medium text-sm text-foreground/80 line-through">
-                    €{product.oldPrice}
-                  </span>
-                )}
+                <div className="space-x-2">
+                  {product && product.oldPrice !== pkg.total_price && (
+                    <span className="font-medium text-sm text-foreground/80 line-through">
+                      €{product.oldPrice}
+                    </span>
+                  )}
 
-                <span className="font-medium text-sm">€{pkg.base_price}</span>
-              </div>
-            </Link>
-          )
-        })}
+                  <span className="font-medium text-sm">€{pkg.total_price}</span>
+                </div>
+              </Link>
+            )
+          })}
       </div>
     </div>
   )
