@@ -34,6 +34,16 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
+      name: "specifications",
+      type: "array",
+      fields: [
+        {
+          name: "label",
+          type: "text",
+        },
+      ],
+    },
+    {
       name: "images",
       type: "array",
       fields: [

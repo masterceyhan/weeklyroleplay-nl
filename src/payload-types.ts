@@ -104,6 +104,12 @@ export interface Product {
   name: string;
   price: number;
   oldPrice: number;
+  specifications?:
+    | {
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   images?:
     | {
         image: number | Media;
@@ -216,6 +222,12 @@ export interface ProductsSelect<T extends boolean = true> {
   name?: T;
   price?: T;
   oldPrice?: T;
+  specifications?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
   images?:
     | T
     | {

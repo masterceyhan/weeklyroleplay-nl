@@ -35,43 +35,62 @@ export default async function Page(props: {
             dangerouslySetInnerHTML={{ __html: pkg.description }}
           />
 
-          <div className="py-3 px-4 bg-muted/10 rounded-xl border border-foreground/5">
-            <h2 className="font-semibold text-lg">Voorwaarden</h2>
-            <ul className="pt-1">
-              <li className="text-sm opacity-75 flex gap-2">
-                <CheckCheckIcon color="green" /> U kunt zonder{" "}
-                <span className="font-bold">refund</span> worden ontslagen bij inactief gedrag!
-              </li>
-              <li className="text-sm opacity-75 flex gap-2">
-                <CheckCheckIcon color="green" /> U kunt zonder{" "}
-                <span className="font-bold">refund</span> worden ontslagen bij kinderachtig gedrag!
-              </li>
-              <li className="text-sm opacity-75 flex gap-2">
-                <CheckCheckIcon color="green" /> U kunt bij het overtreden van onze regels worden
-                verbannen/verwijderd uit uw functie
-              </li>
-              <li className="text-sm opacity-75 flex gap-2">
-                <CheckCheckIcon color="green" /> U bent verplicht respectvol te communiceren met
-                collegas en spelers.
-              </li>
-              <li className="text-sm opacity-75 flex gap-2">
-                <CheckCheckIcon color="green" /> Het delen van vertrouwelijke bedrijfsinformatie is
-                ten strengste verboden.
-              </li>
-              <li className="text-sm opacity-75 flex gap-2">
-                <CheckCheckIcon color="green" /> U dient regelmatig deel te nemen aan staffmeetingen
-                om uw vaardigheden/kennis bij te werken.
-              </li>
-              <li className="text-sm opacity-75 flex gap-2">
-                <CheckCheckIcon color="green" /> Het gebruik van bedrijfsmiddelen voor persoonlijke
-                doeleinden is niet toegestaan.
-              </li>
-              <li className="text-sm opacity-75 flex gap-2">
-                <CheckCheckIcon color="green" /> In geval van ziekte of afwezigheid, dient u tijdig
-                het management team op de hoogte te stellen.
-              </li>
-            </ul>
-          </div>
+          {(product?.specifications?.length ?? 0) > 0 && (
+            <div className="py-3 px-4 bg-muted/10 rounded-xl border border-foreground/5">
+              <h2 className="font-semibold text-lg">Specificaties</h2>
+              <div className="flex flex-wrap gap-1 pt-2">
+                {product?.specifications?.map((spec, i) => (
+                  <span
+                    key={i}
+                    className="text-sm font-medium px-2 bg-blue-500 border border-blue-400 rounded"
+                  >
+                    {spec.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {pkg.category.id == 2844255 && (
+            <div className="py-3 px-4 bg-muted/10 rounded-xl border border-foreground/5">
+              <h2 className="font-semibold text-lg">Voorwaarden</h2>
+              <ul className="pt-1">
+                <li className="text-sm opacity-75 flex gap-2">
+                  <CheckCheckIcon color="green" /> U kunt zonder{" "}
+                  <span className="font-bold">refund</span> worden ontslagen bij inactief gedrag!
+                </li>
+                <li className="text-sm opacity-75 flex gap-2">
+                  <CheckCheckIcon color="green" /> U kunt zonder{" "}
+                  <span className="font-bold">refund</span> worden ontslagen bij kinderachtig
+                  gedrag!
+                </li>
+                <li className="text-sm opacity-75 flex gap-2">
+                  <CheckCheckIcon color="green" /> U kunt bij het overtreden van onze regels worden
+                  verbannen/verwijderd uit uw functie
+                </li>
+                <li className="text-sm opacity-75 flex gap-2">
+                  <CheckCheckIcon color="green" /> U bent verplicht respectvol te communiceren met
+                  collegas en spelers.
+                </li>
+                <li className="text-sm opacity-75 flex gap-2">
+                  <CheckCheckIcon color="green" /> Het delen van vertrouwelijke bedrijfsinformatie
+                  is ten strengste verboden.
+                </li>
+                <li className="text-sm opacity-75 flex gap-2">
+                  <CheckCheckIcon color="green" /> U dient regelmatig deel te nemen aan
+                  staffmeetingen om uw vaardigheden/kennis bij te werken.
+                </li>
+                <li className="text-sm opacity-75 flex gap-2">
+                  <CheckCheckIcon color="green" /> Het gebruik van bedrijfsmiddelen voor
+                  persoonlijke doeleinden is niet toegestaan.
+                </li>
+                <li className="text-sm opacity-75 flex gap-2">
+                  <CheckCheckIcon color="green" /> In geval van ziekte of afwezigheid, dient u
+                  tijdig het management team op de hoogte te stellen.
+                </li>
+              </ul>
+            </div>
+          )}
 
           <div className="py-5 px-4 bg-muted/10 rounded-xl border border-foreground/5 flex flex-col gap-4 justify-center items-center">
             <span className="font-semibold">
