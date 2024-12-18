@@ -26,4 +26,5 @@ export const env = createEnv({
     DISCORD_CLIENT: process.env.DISCORD_CLIENT,
     DISCORD_SECRET: process.env.DISCORD_SECRET,
   },
+  skipValidation: !!process.env.SKIP_CI,
 })
