@@ -20,7 +20,12 @@ export function ProductImages(props: {
     <div className="space-y-4 w-full flex flex-col lg:col-span-3">
       <NavigateBackButton catergory={props.categorySlug} />
       <div className="flex flex-col bg-muted/10 p-4 rounded-lg border border-foreground/5 gap-2 group w-full items-center">
-        <Image src={selectedImage ?? "/logo.png"} width={350} height={350} alt={props.pkg.name} />
+        <Image
+          src={selectedImage ?? "/logo.png"}
+          width={350}
+          height={350}
+          alt={props.pkg.name.replaceAll("_", " ")}
+        />
       </div>
 
       <div className="pt-2 flex flex-wrap gap-2">
@@ -42,7 +47,7 @@ export function ProductImages(props: {
                 src={image.url ?? "/logo.png"}
                 width={128}
                 height={128}
-                alt={props.pkg.name}
+                alt={props.pkg.name.replaceAll("_", " ")}
                 className="max-h-32 object-contain"
               />
             </div>

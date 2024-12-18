@@ -86,9 +86,14 @@ export default function Page() {
                   key={i}
                   className="flex bg-muted/10 p-4 rounded-lg border border-foreground/5 gap-2 w-full"
                 >
-                  <Image src={pkg?.image ?? "/logo.png"} width={128} height={128} alt={pkg.name} />
+                  <Image
+                    src={pkg?.image ?? "/logo.png"}
+                    width={128}
+                    height={128}
+                    alt={pkg.name.replaceAll("_", " ")}
+                  />
                   <div className="pt-4 h-full">
-                    <span className="font-bold">{pkg.name}</span>
+                    <span className="font-bold">{pkg.name.replaceAll("_", " ")}</span>
                     <div
                       className="text-foreground/80 text-sm line-clamp-1"
                       dangerouslySetInnerHTML={{ __html: pkg.description }}

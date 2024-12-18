@@ -34,10 +34,10 @@ export default async function Page(props: { params: Promise<{ categorySlug: stri
                 src={pkg.image ?? "/logo.png"}
                 width={256}
                 height={256}
-                alt={pkg.name}
+                alt={pkg.name.replaceAll("_", "")}
               />
 
-              <h2 className="text-lg font-semibold">{pkg.name}</h2>
+              <h2 className="text-lg font-semibold">{pkg.name.replaceAll("_", " ")}</h2>
               <div
                 className="text-foreground/80 text-sm line-clamp-2"
                 dangerouslySetInnerHTML={{ __html: category.description }}

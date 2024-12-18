@@ -28,7 +28,7 @@ export default async function Page(props: {
 
         <div className="flex flex-col gap-3 lg:col-span-2">
           <NavigateBackButton hide />
-          <h1 className="text-2xl font-bold">{pkg.name}</h1>
+          <h1 className="text-2xl font-bold">{pkg.name.replaceAll("_", " ")}</h1>
           <span className="text-lg text-foreground/90 font-medium">€{pkg.base_price}</span>
           <div
             className="text-foreground/80"
