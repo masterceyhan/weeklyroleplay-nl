@@ -15,6 +15,6 @@ export async function getTebexCategoryBySlug(slug: string) {
 }
 
 export const getCachedTebexCategories = unstable_cache(getTebexCategories, ["categories"], {
-  revalidate: 300,
+  revalidate: 60 * 60,
   tags: ["categories"],
 })

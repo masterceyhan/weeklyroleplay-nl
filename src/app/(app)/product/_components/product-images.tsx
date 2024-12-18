@@ -1,11 +1,11 @@
 "use client"
 
 import { Package } from "tebex_headless"
-import Image from "next/image"
+import NextImage from "next/image"
 
 import NavigateBackButton from "./navigate-back-button"
 import { Media, Product } from "@/payload-types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 
 export function ProductImages(props: {
@@ -16,11 +16,18 @@ export function ProductImages(props: {
   const [selectedImage, setSelectedImage] = useState(props.pkg.image)
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
+  useEffect(() => {
+    props.images?.forEach((x) => {
+      const img = new Image()
+      img.src = (x.image as Media).url ?? "/logo.png"
+    })
+  }, [props.images])
+
   return (
     <div className="space-y-4 w-full flex flex-col lg:col-span-3">
       <NavigateBackButton catergory={props.categorySlug} />
       <div className="flex flex-col bg-muted/10 p-4 rounded-lg border border-foreground/5 gap-2 group w-full items-center">
-        <Image
+        <NextImage
           src={selectedImage ?? "/logo.png"}
           width={350}
           height={350}
