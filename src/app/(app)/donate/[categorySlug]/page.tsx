@@ -29,7 +29,7 @@ export default async function Page(props: { params: Promise<{ categorySlug: stri
               <Link
                 href={`/product/${categorySlug}/${pkg.id}`}
                 key={pkg.id}
-                className="flex flex-col bg-muted/10 p-4 rounded-lg border border-foreground/5 gap-2 group hover:bg-foreground/5 transition-colors"
+                className="flex flex-col dark:bg-muted/10 p-4 rounded-lg border border-foreground/5 gap-2 group hover:bg-foreground/10 transition-colors bg-foreground/5"
               >
                 <Image
                   className="self-center group-hover:-translate-y-3 transition-transform"

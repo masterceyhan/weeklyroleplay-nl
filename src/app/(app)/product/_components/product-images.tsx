@@ -26,7 +26,7 @@ export function ProductImages(props: {
   return (
     <div className="space-y-4 w-full flex flex-col lg:col-span-3">
       <NavigateBackButton catergory={props.categorySlug} />
-      <div className="flex flex-col bg-muted/10 p-4 rounded-lg border border-foreground/5 gap-2 group w-full items-center">
+      <div className="flex flex-col dark:bg-muted/10 bg-foreground/5 p-4 rounded-lg border border-foreground/5 gap-2 group w-full items-center">
         <NextImage
           src={selectedImage ?? "/logo.png"}
           width={350}
@@ -42,7 +42,7 @@ export function ProductImages(props: {
             <div
               key={i}
               className={cn(
-                "bg-muted/10 rounded-lg cursor-pointer transition-colors",
+                "dark:bg-muted/10 bg-foreground/5 rounded-lg cursor-pointer transition-colors",
                 selectedIndex == i && "outline outline-1 outline-blue-500/50",
               )}
               onClick={() => {

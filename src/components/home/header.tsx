@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "../ui/button"
 import ProfileDropdown from "../profile-dropdown"
+import ThemeSwitcher from "../theme-switcher"
 
 export default function Header() {
   return (
@@ -25,8 +26,10 @@ export default function Header() {
           </Link>
         </div>
 
-        <ProfileDropdown />
-        {/* <ThemeSwitcher /> */}
+        <div className="flex gap-2">
+          <ProfileDropdown />
+          <ThemeSwitcher />
+        </div>
       </header>
     </div>
   )

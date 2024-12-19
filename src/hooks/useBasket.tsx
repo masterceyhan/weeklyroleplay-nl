@@ -33,6 +33,11 @@ export function BasketProvider(props: { children: React.ReactNode }) {
 
   useEffect(() => {
     tebexHeadlessClient.getPackages().then(setPackages)
+
+    const basketIdent = localStorage.getItem("basketIdent")
+    if (basketIdent) {
+      tebexHeadlessClient.getBasket(basketIdent).then(setBasket)
+    }
   }, [])
 
   function authenticate() {

@@ -4,7 +4,6 @@ import Image from "next/image"
 import NavigateBackButton from "../../_components/navigate-back-button"
 import AddToCart from "../../_components/add-to-cart"
 import { getPayloadProductCached } from "@/server/products"
-import { Media } from "@/payload-types"
 import { ProductImages } from "../../_components/product-images"
 
 export default async function Page(props: {
@@ -36,7 +35,7 @@ export default async function Page(props: {
           />
 
           {(product?.specifications?.length ?? 0) > 0 && (
-            <div className="py-3 px-4 bg-muted/10 rounded-xl border border-foreground/5">
+            <div className="py-3 px-4 dark:bg-muted/10 bg-foreground/5 rounded-xl border border-foreground/5">
               <h2 className="font-semibold text-lg">Specificaties</h2>
               <div className="flex flex-wrap gap-1 pt-2">
                 {product?.specifications?.map((spec, i) => (
@@ -52,7 +51,7 @@ export default async function Page(props: {
           )}
 
           {pkg.category.id == 2844255 && (
-            <div className="py-3 px-4 bg-muted/10 rounded-xl border border-foreground/5">
+            <div className="py-3 px-4 dark:bg-muted/10 bg-foreground/5 rounded-xl border border-foreground/5">
               <h2 className="font-semibold text-lg">Voorwaarden</h2>
               <ul className="pt-1">
                 <li className="text-sm opacity-75 flex gap-2">
@@ -92,7 +91,7 @@ export default async function Page(props: {
             </div>
           )}
 
-          <div className="py-5 px-4 bg-muted/10 rounded-xl border border-foreground/5 flex flex-col gap-4 justify-center items-center">
+          <div className="py-5 px-4 dark:bg-muted/10 bg-foreground/5 rounded-xl border border-foreground/5 flex flex-col gap-4 justify-center items-center">
             <span className="font-semibold">
               U ontvangt uw <span className="text-blue-500">producten</span> direct ingame!
             </span>
