@@ -1,6 +1,7 @@
 import { getTebexCategoryBySlug } from "@/lib/tebex"
 import { getPayloadProductsCached } from "@/server/products"
 import ProductCard from "../_components/product-card"
+import Reveal from "../_components/reveal"
 
 export default async function Page(props: { params: Promise<{ categorySlug: string }> }) {
   const { categorySlug } = await props.params
@@ -21,11 +22,13 @@ export default async function Page(props: { params: Promise<{ categorySlug: stri
       <div className="pt-10 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2">
         {category.packages
           .sort((a, b) => b.total_price - a.total_price)
-          .map((pkg) => {
+          .map((pkg, i) => {
             const product = products.find((p) => p.id == pkg.id)
 
             return (
-              <ProductCard categorySlug={categorySlug} pkg={pkg} product={product} key={pkg.id} />
+              <Reveal key={pkg.id} index={i}>
+                <ProductCard categorySlug={categorySlug} pkg={pkg} product={product} />
+              </Reveal>
             )
           })}
       </div>
