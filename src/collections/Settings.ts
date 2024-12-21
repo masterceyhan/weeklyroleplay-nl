@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache"
 import { GlobalConfig } from "payload"
 
 export const Settings: GlobalConfig = {
@@ -19,6 +20,13 @@ export const Settings: GlobalConfig = {
           },
         },
       ],
+      hooks: {
+        afterChange: [
+          () => {
+            revalidatePath("/")
+          },
+        ],
+      },
     },
   ],
 }
