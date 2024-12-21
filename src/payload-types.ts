@@ -120,6 +120,20 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  items?:
+    | {
+        name: string;
+        count: number;
+        id?: string | null;
+      }[]
+    | null;
+  vehicles?:
+    | {
+        model: string;
+        type: 'car' | 'boat' | 'airplane';
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -236,6 +250,20 @@ export interface ProductsSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
+        id?: T;
+      };
+  items?:
+    | T
+    | {
+        name?: T;
+        count?: T;
+        id?: T;
+      };
+  vehicles?:
+    | T
+    | {
+        model?: T;
+        type?: T;
         id?: T;
       };
   updatedAt?: T;

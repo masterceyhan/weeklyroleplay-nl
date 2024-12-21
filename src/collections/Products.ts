@@ -60,6 +60,60 @@ export const Products: CollectionConfig = {
         },
       ],
     },
+    {
+      name: "items",
+      label: "Items",
+      type: "array",
+      fields: [
+        {
+          name: "name",
+          type: "text",
+          label: "Naam",
+          required: true,
+        },
+        {
+          name: "count",
+          type: "number",
+          label: "Aantal",
+          defaultValue: 1,
+          required: true,
+        },
+      ],
+    },
+    {
+      name: "vehicles",
+      label: "Voertuigen",
+      type: "array",
+
+      fields: [
+        {
+          name: "model",
+          label: "Model",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "type",
+          label: "Type",
+          type: "select",
+          required: true,
+          options: [
+            {
+              label: "Auto",
+              value: "car",
+            },
+            {
+              label: "Boot",
+              value: "boat",
+            },
+            {
+              label: "Vliegtuig",
+              value: "airplane",
+            },
+          ],
+        },
+      ],
+    },
   ],
   hooks: {
     afterChange: [
