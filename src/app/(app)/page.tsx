@@ -7,7 +7,7 @@ import ProductCard from "./donate/_components/product-card"
 import { getCachedTebexCategories } from "@/lib/tebex"
 import { Product } from "@/payload-types"
 
-export const revalidate = 60
+export const revalidate = 300
 
 export default async function Page() {
   const payload = await getPayload({ config: payloadConfig })
