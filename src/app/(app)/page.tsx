@@ -1,20 +1,15 @@
 import UserCount from "@/components/home/user-count"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { getPayload } from "payload"
-import payloadConfig from "@payload-config"
 import ProductCard from "./donate/_components/product-card"
 import { getCachedTebexCategories } from "@/lib/tebex"
 import { Product } from "@/payload-types"
+import { getSettingsCached } from "@/server/settings"
 
 export const revalidate = 300
 
 export default async function Page() {
-  const payload = await getPayload({ config: payloadConfig })
-  const settings = await payload.findGlobal({
-    slug: "settings",
-  })
-
+  const settings = await getSettingsCached()
   const categories = await getCachedTebexCategories()
   const packages = categories.flatMap((x) => x.packages)
 

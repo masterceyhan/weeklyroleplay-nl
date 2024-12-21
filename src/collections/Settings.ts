@@ -28,5 +28,10 @@ export const Settings: GlobalConfig = {
         ],
       },
     },
+    {
+      name: "donatieGoal",
+      label: "Donatie Doel",
+      type: "number",
+    },
   ],
 }

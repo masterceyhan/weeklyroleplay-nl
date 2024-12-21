@@ -285,6 +285,7 @@ export interface Setting {
         id?: string | null;
       }[]
     | null;
+  donatieGoal?: number | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -299,6 +300,7 @@ export interface SettingsSelect<T extends boolean = true> {
         product?: T;
         id?: T;
       };
+  donatieGoal?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
