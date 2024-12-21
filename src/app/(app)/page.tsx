@@ -1,8 +1,23 @@
 import UserCount from "@/components/home/user-count"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { getPayload } from "payload"
+import payloadConfig from "@payload-config"
+import ProductCard from "./donate/_components/product-card"
+import { getCachedTebexCategories } from "@/lib/tebex"
+import { Product } from "@/payload-types"
 
-export default function Page() {
+export const revalidate = 60
+
+export default async function Page() {
+  const payload = await getPayload({ config: payloadConfig })
+  const settings = await payload.findGlobal({
+    slug: "settings",
+  })
+
+  const categories = await getCachedTebexCategories()
+  const packages = categories.flatMap((x) => x.packages)
+
   return (
     <main className="flex flex-col">
       <section className="relative w-full h-[700px] overflow-hidden">
@@ -42,8 +57,24 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="container sm:py-40">
+      <section className="container sm:py-40 flex flex-col gap-10">
         <h1 className="text-3xl font-bold">Geliefde Pakketten</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+          {settings.featuredProducts?.map((entry) => {
+            const product = entry.product as Product
+            const pkg = packages.find((pkg) => pkg.id === product.id)
+            const category = categories.find((category) => category.id === pkg?.category.id)
+
+            return (
+              <ProductCard
+                categorySlug={category?.slug ?? "/"}
+                pkg={pkg!}
+                product={product}
+                key={product.id}
+              />
+            )
+          })}
+        </div>
       </section>
     </main>
   )

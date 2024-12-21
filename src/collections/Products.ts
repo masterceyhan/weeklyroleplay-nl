@@ -5,11 +5,16 @@ import { CollectionConfig } from "payload"
 
 export const Products: CollectionConfig = {
   slug: "products",
+  labels: {
+    singular: "Product",
+    plural: "Products",
+  },
   access: {
     create: () => false,
   },
   admin: {
     listSearchableFields: ["name"],
+    useAsTitle: "name",
   },
   fields: [
     {
