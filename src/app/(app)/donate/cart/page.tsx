@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils"
 import Script from "next/script"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { tebexHeadlessClient } from "@/lib/tebex"
 
 const url = "https://servers-frontend.fivem.net/api/servers/single/meojrd"
 
@@ -38,12 +39,28 @@ export default function Page() {
 
   function checkout() {
     if (!basket) return
-    window.Tebex.checkout.init({
-      ident: basket.ident,
-      theme: "dark",
-    })
+    ;(async () => {
+      const packages = basket.packages.map((pkg) => ({
+        id: pkg.id,
+        quantity: pkg.in_basket.quantity,
+      }))
+      for (const pkg of packages) {
+        await tebexHeadlessClient.removePackage(basket.ident, pkg.id)
+      }
 
-    window.Tebex.checkout.launch()
+      for (const pkg of packages) {
+        await tebexHeadlessClient.addPackageToBasket(basket.ident, pkg.id, pkg.quantity, "single", {
+          serverId: value,
+        })
+      }
+
+      window.Tebex.checkout.init({
+        ident: basket.ident,
+        theme: "dark",
+      })
+
+      window.Tebex.checkout.launch()
+    })()
   }
 
   useEffect(() => {
@@ -168,14 +185,7 @@ export default function Page() {
                 </Command>
               </PopoverContent>
             </Popover>
-            {!players
-              .find((player) => player.id === Number(value))
-              ?.identifiers.find((x) => x.startsWith("fivem:"))
-              ?.includes(basket?.username_id ?? "dannyisdik") && (
-              <span className="text-orange-500 text-xs">
-                Waarschuwing: FiveM account komt niet overeen
-              </span>
-            )}
+            {!value && <span className="text-orange-500 text-xs">Speler is niet geselecteerd</span>}
 
             <Separator />
             <div className="font-medium text-foreground/90 justify-between flex">
@@ -185,12 +195,14 @@ export default function Page() {
 
             <Button
               className="bg-blue-500 text-white hover:bg-blue-400 border border-blue-400 hover:text-white w-full mt-5"
-              disabled={isTebexLoading || basket?.packages?.length === 0}
-              onClick={() => checkout()}
+              disabled={isTebexLoading || basket?.packages?.length === 0 || !value}
+              onClick={() => {
+                checkout()
+              }}
               size="lg"
             >
               <FaCreditCard className="mr-2" />
-              Afrekenen
+              Afrekenen {value}
             </Button>
           </div>
         </div>
