@@ -4,18 +4,20 @@ import Image from "next/image"
 import { useBasket } from "@/hooks/useBasket"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
-import { FaCreditCard, FaTrash } from "react-icons/fa"
-import { useEffect, useState } from "react"
+import { FaCreditCard, FaDiscord, FaTrash } from "react-icons/fa"
+import { useState } from "react"
 import Script from "next/script"
 import { useRouter } from "next/navigation"
-import { toast } from "sonner"
 import { tebexHeadlessClient } from "@/lib/tebex"
 import { Input } from "@/components/ui/input"
+import { signIn, useSession } from "next-auth/react"
+import { signOut } from "next-auth/react"
 
 export default function Page() {
   const { basket, isLoading, isTebexLoading, removePackage, setBasket } = useBasket()
   const [serverId, setValue] = useState<number>()
-  const [open, setOpen] = useState(false)
+
+  const { data: session } = useSession()
   const router = useRouter()
 
   function checkout() {
@@ -95,7 +97,7 @@ export default function Page() {
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="group"
+                    className="group ml-auto"
                     onClick={() => {
                       removePackage(pkg.id)
                     }}
@@ -112,7 +114,7 @@ export default function Page() {
             <h2 className="text-lg font-semibold">Overzicht</h2>
             <Separator />
 
-            <div className="w-full p-2 rounded-lg">
+            <div className="w-full rounded-lg">
               <p className="text-sm text-foreground/80">
                 U kunt uw Server ID bekijken doormiddel van Z ingedrukt te houden!
               </p>
@@ -129,6 +131,38 @@ export default function Page() {
               />
             </div>
 
+            {session?.user ? (
+              <div className="flex gap-5 items-center pt-4">
+                <Image
+                  src={session.user.image ?? "/logo.png"}
+                  width={128}
+                  height={128}
+                  className="w-10 rounded-full"
+                  alt="Profile Picture"
+                />
+
+                <span className="font-bold text-foreground/90">{session.user.name}</span>
+                <Button
+                  className="ml-auto"
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => signOut()}
+                >
+                  Uitloggen
+                </Button>
+              </div>
+            ) : (
+              <Button
+                className="bg-blue-500 text-white hover:bg-blue-400 border border-blue-400 hover:text-white"
+                onClick={() => {
+                  signIn("discord")
+                }}
+              >
+                <FaDiscord className="mr-2" />
+                Login met Discord
+              </Button>
+            )}
+
             <Separator />
             <div className="font-medium text-foreground/90 justify-between flex">
               <span>Subtotaal</span>
@@ -137,7 +171,9 @@ export default function Page() {
 
             <Button
               className="bg-blue-500 text-white hover:bg-blue-400 border border-blue-400 hover:text-white w-full mt-5"
-              disabled={isTebexLoading || basket?.packages?.length === 0 || !serverId}
+              disabled={
+                isTebexLoading || basket?.packages?.length === 0 || !serverId || !session?.user
+              }
               onClick={() => {
                 checkout()
               }}

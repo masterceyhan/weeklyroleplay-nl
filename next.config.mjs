@@ -11,6 +11,9 @@ const nextConfig = {
       {
         hostname: "forum.cfx.re",
       },
+      {
+        hostname: "cdn.discordapp.com",
+      },
     ],
   },
   experimental: {
