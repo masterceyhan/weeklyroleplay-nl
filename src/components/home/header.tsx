@@ -19,9 +19,15 @@ export default function Header() {
             />
           </Link>
 
-          <Link href="/donate">
-            <Button variant="ghost" size="lg" className="font-semibold text-base uppercase h-10">
+          <Link href="/donate" className="pl-4">
+            <Button variant="ghost" className="font-semibold uppercase h-10 text-sm">
               Doneren
+            </Button>
+          </Link>
+
+          <Link href="/regels">
+            <Button variant="ghost" className="font-semibold uppercase h-10 text-sm">
+              Regels
             </Button>
           </Link>
         </div>

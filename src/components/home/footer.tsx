@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { DiscordAnim } from "../animations"
 
 const navigationItems = [
   {
