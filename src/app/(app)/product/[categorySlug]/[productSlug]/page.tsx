@@ -95,7 +95,43 @@ export default async function Page(props: {
             <span className="font-semibold">
               U ontvangt uw <span className="text-blue-500">producten</span> direct ingame!
             </span>
-            <Image src="/tebex.svg" width={100} height={100} alt="logo" />
+            <div className="flex gap-2">
+              <Image
+                src="/paymentMethods/ideal.png"
+                width={30}
+                height={30}
+                alt="logo"
+                className="w-full h-[25px]"
+              />
+              <Image
+                src="/paymentMethods/paypal.png"
+                width={30}
+                height={30}
+                alt="logo"
+                className="w-full h-[25px]"
+              />
+              <Image
+                src="/paymentMethods/applepay.png"
+                width={30}
+                height={30}
+                alt="logo"
+                className="w-full h-[25px]"
+              />
+              <Image
+                src="/paymentMethods/bancontact.png"
+                width={30}
+                height={30}
+                alt="logo"
+                className="w-full h-[25px]"
+              />
+              <Image
+                src="/paymentMethods/creditcard.png"
+                width={30}
+                height={30}
+                alt="logo"
+                className="w-full h-[25px]"
+              />
+            </div>
             <AddToCart packageId={pkg.id} />
           </div>
         </div>
