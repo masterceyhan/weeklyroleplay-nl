@@ -6,34 +6,15 @@ import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { FaCreditCard, FaTrash } from "react-icons/fa"
 import { useEffect, useState } from "react"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command"
-import { Check, ChevronsUpDown } from "lucide-react"
-import { cn } from "@/lib/utils"
 import Script from "next/script"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { tebexHeadlessClient } from "@/lib/tebex"
-
-const url = "https://servers-frontend.fivem.net/api/servers/single/meojrd"
-
-type Player = {
-  id: number
-  name: string
-  identifiers: string[]
-}
+import { Input } from "@/components/ui/input"
 
 export default function Page() {
   const { basket, isLoading, isTebexLoading, removePackage, setBasket } = useBasket()
-  const [players, setPlayers] = useState<Player[]>([])
-  const [value, setValue] = useState<string>()
+  const [serverId, setValue] = useState<number>()
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
@@ -50,7 +31,7 @@ export default function Page() {
 
       for (const pkg of packages) {
         await tebexHeadlessClient.addPackageToBasket(basket.ident, pkg.id, pkg.quantity, "single", {
-          serverId: value,
+          serverId: serverId,
         })
       }
 
@@ -62,17 +43,6 @@ export default function Page() {
       window.Tebex.checkout.launch()
     })()
   }
-
-  useEffect(() => {
-    fetch(url, {
-      next: {
-        revalidate: 60,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setPlayers(data.Data.players))
-      .catch(() => toast.error("Fout bij het ophalen van de spelers!"))
-  }, [])
 
   function registerEvents() {
     window.Tebex.checkout.on("payment:complete", (e) => {
@@ -142,50 +112,22 @@ export default function Page() {
             <h2 className="text-lg font-semibold">Overzicht</h2>
             <Separator />
 
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={open}
-                  className="w-full justify-between"
-                >
-                  {value
-                    ? players.find((player) => player.id === Number(value))?.name
-                    : "Selecteer Speler..."}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[400px] p-0">
-                <Command>
-                  <CommandInput placeholder="Zoek speler..." />
-                  <CommandList>
-                    <CommandEmpty>Geen spelers gevonden.</CommandEmpty>
-                    <CommandGroup>
-                      {players.map((player) => (
-                        <CommandItem
-                          key={player.id}
-                          value={player.id.toString()}
-                          onSelect={(currentValue) => {
-                            setValue(currentValue === value ? "" : player.id.toString())
-                            setOpen(false)
-                          }}
-                        >
-                          <Check
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              value === player.id.toString() ? "opacity-100" : "opacity-0",
-                            )}
-                          />
-                          [{player.id}] {player.name}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-            {!value && <span className="text-orange-500 text-xs">Speler is niet geselecteerd</span>}
+            <div className="w-full p-2 rounded-lg">
+              <p className="text-sm text-foreground/80">
+                U kunt uw Server ID bekijken doormiddel van Z ingedrukt te houden!
+              </p>
+              <Input
+                placeholder="Server ID"
+                className="w-full bg-background/20 h-10 mt-2"
+                value={serverId || 0}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (/^\d*$/.test(value)) {
+                    setValue(Number(value))
+                  }
+                }}
+              />
+            </div>
 
             <Separator />
             <div className="font-medium text-foreground/90 justify-between flex">
@@ -195,14 +137,14 @@ export default function Page() {
 
             <Button
               className="bg-blue-500 text-white hover:bg-blue-400 border border-blue-400 hover:text-white w-full mt-5"
-              disabled={isTebexLoading || basket?.packages?.length === 0 || !value}
+              disabled={isTebexLoading || basket?.packages?.length === 0 || !serverId}
               onClick={() => {
                 checkout()
               }}
               size="lg"
             >
               <FaCreditCard className="mr-2" />
-              Afrekenen {value}
+              Afrekenen
             </Button>
           </div>
         </div>
