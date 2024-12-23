@@ -14,6 +14,9 @@ const nextConfig = {
       {
         hostname: "cdn.discordapp.com",
       },
+      {
+        hostname: "avatars.discourse-cdn.com",
+      },
     ],
   },
   experimental: {
